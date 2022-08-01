@@ -14,4 +14,6 @@ public class WebController {
     public String pageNotFound() {
         return "404";
     }
+    @RequestMapping(value = "/admin")
+    public String adminDashBoard(){ return "admin/dashboard";}
 }

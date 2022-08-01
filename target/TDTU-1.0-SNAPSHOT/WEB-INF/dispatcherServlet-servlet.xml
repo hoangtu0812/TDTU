@@ -13,14 +13,14 @@
     <bean id="dataSource"
           class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name = "driverClassName" value = "com.mysql.jdbc.Driver"/>
-        <property name = "url" value = "jdbc:mysql://localhost:3306/tdtudb"/>
-        <property name = "username" value = "root"/>
-        <property name = "password" value = "Ptu0812@"/>
+        <property name = "url" value = "jdbc:mysql://sql6.freemysqlhosting.net:3306/sql6509306"/>
+        <property name = "username" value = "sql6509306"/>
+        <property name = "password" value = "3xpdPI68KW"/>
     </bean>
-<!--    <bean id = "AccountDAO"-->
-<!--          class = "dao.AccountDAO">-->
-<!--        <property name = "dataSource" ref = "dataSource" />-->
-<!--    </bean>-->
+    <bean id = "AccountDAO"
+          class = "dao.AccountDAO">
+        <property name = "dataSource" ref = "dataSource" />
+    </bean>
 
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

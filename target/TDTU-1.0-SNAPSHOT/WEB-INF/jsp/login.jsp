@@ -13,6 +13,13 @@
 </c:import>
 <div class="login">
 
+    <form action="${pageContext.request.contextPath}/login" method="post">
+        <label for="user-mail">Email:</label>
+        <input type="text" id="user-mail" name="userMail"/>
+        <label for="user-password">Password:</label>
+        <input type="password" id="user-password" name="userPassword"/>
+        <input type="submit" id="submit" name="submit"/>
+    </form>
 </div>
 <c:import url="footer.jsp"/>
 
