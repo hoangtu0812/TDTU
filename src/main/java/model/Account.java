@@ -119,4 +119,13 @@ public class Account {
     public String getMessage() {
         return this.message;
     }
+    public String toString() {
+        return this.userMail + " "
+                + this.password + " "
+                + this.name + " "
+                + this.birthday + " "
+                + this.phone + " "
+                + this.role + " "
+                + this.status + " ";
+    }
 }

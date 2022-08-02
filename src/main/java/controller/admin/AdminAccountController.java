@@ -35,14 +35,20 @@ public class AdminAccountController {
         String userPhone = request.getParameter("userPhone");
         String userRole = request.getParameter("userRole");
         String userGetStatus = request.getParameter("userStatus");
-
+        System.out.println(userMail + "/n" + userPassword
+                                    + "/n" + userGetBirthday
+                                    + "/n" + userName
+                                    + "/n" + userPhone
+                                    + "/n" + userGetStatus
+                                    + "/n" + userRole
+                                    );
         int userStatus = 0;
         Date processDate;
         java.sql.Date userBirthday = null;
         try {
             userStatus = Integer.parseInt(userGetStatus);
 //            userBirthday = new SimpleDateFormat("dd/mm/yyyy").parse(userGetBirthday);
-            processDate = new SimpleDateFormat("yyyy/MM/dd").parse(userGetBirthday);
+            processDate = new SimpleDateFormat("yyyy-MM-dd").parse(userGetBirthday);
             userBirthday = new java.sql.Date(processDate.getDate());
 
 
@@ -61,6 +67,7 @@ public class AdminAccountController {
             return "admin/AdminAccountCreate";
         } else {
             try {
+                System.out.println(account.toString());
                 accountDAO.create(account);
             } catch (Exception exception) {
                 model.addAttribute("message", "Error!");

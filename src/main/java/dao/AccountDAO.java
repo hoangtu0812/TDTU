@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AccountDAO {
@@ -36,15 +38,23 @@ public class AccountDAO {
         try {
             String SQL = "insert into Account (user_mail, user_password, user_name, user_birthday, user_phone, user_role, user_status) values (?,?,?,?,?,?,?)";
             jdbcTemplate.update(SQL, account.getUserMail(), hashPassword(account.getPassword()), account.getBirthday(), account.getPhone(), account.getRole(), account.getStatus());
-            jdbcTemplate.getDataSource().getConnection().commit();
+//            jdbcTemplate.getDataSource().getConnection().commit();
         } catch (Exception exception) {
-            jdbcTemplate.getDataSource().getConnection().rollback();
+//            jdbcTemplate.getDataSource().getConnection().rollback();
+            exception.printStackTrace();
         }
     }
     public boolean checkExist(Account account) {
         String SQL = "select count(*) from Account where user_mail = ?";
-        int count = jdbcTemplate.queryForObject(SQL, new Object[]{account.getUserMail()}, Integer.class);
-        if (count == 0) {
+        int count = 0;
+        try {
+            System.out.println(account.getUserMail());
+            count = jdbcTemplate.queryForObject(SQL, new Object[]{account.getUserMail()}, Integer.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(count);
+        if (count != 0) {
             //đã tồn tại
             this.message = "This email was exists!";
             return false;
@@ -80,6 +90,17 @@ public class AccountDAO {
     }
     public String getMessage () {
         return this.message;
+    }
+    public List<Account> getAccountList () {
+        String SQL = "select * from Account";
+        System.out.println("Check");
+        List<Account> accountList = new ArrayList<>();
+        try {
+            accountList = jdbcTemplate.query(SQL, new AccountMapper());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return accountList;
     }
 
 }
