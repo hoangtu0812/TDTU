@@ -37,7 +37,7 @@ public class AccountDAO {
 //        String SQL = "insert into Account(user_mail, user_password, user_name, user_birthday, user_phone, user_role, user_status) values('hoangtupham@gmail.com3', 'test123','Hoang Tu', '1997/12/13', '0914989487', 'admin', 1) "; //yyyy/mm/dd
         try {
             String SQL = "insert into Account (user_mail, user_password, user_name, user_birthday, user_phone, user_role, user_status) values (?,?,?,?,?,?,?)";
-            jdbcTemplate.update(SQL, account.getUserMail(), hashPassword(account.getPassword()), account.getBirthday(), account.getPhone(), account.getRole(), account.getStatus());
+            jdbcTemplate.update(SQL, account.getUserMail(), hashPassword(account.getPassword()),account.getName(), account.getBirthday(), account.getPhone(), account.getRole(), account.getStatus());
 //            jdbcTemplate.getDataSource().getConnection().commit();
         } catch (Exception exception) {
 //            jdbcTemplate.getDataSource().getConnection().rollback();
@@ -68,6 +68,7 @@ public class AccountDAO {
         int count = jdbcTemplate.queryForObject(SQL, new Object[]{account.getUserMail(), hashPassword(account.getPassword())}, Integer.class);
         if (count == 0) {
             //thông tin đăng nhập sai
+            this.message = "Your email or password is not correct!";
             return false;
         } else {
             //thông tin đăng nhập đúng
@@ -102,5 +103,8 @@ public class AccountDAO {
         }
         return accountList;
     }
-
+    public Account getAccount (String userMail) {
+        String SQL = "select * from Account where user_mail = ?";
+        return jdbcTemplate.queryForObject(SQL, new Object[]{userMail}, new AccountMapper());
+    }
 }

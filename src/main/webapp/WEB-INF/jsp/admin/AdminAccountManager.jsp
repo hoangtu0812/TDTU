@@ -32,7 +32,23 @@
                     <td>${account.birthday}</td>
                     <td>${account.phone}</td>
                     <td>${account.role}</td>
-                    <td>${account.status}</td>
+                    <td>
+                        <c:if test="${account.status == 0}">
+                            Pending
+                        </c:if>
+                        <c:if test="${account.status == 1}">
+                            Active
+                        </c:if>
+                        <c:if test="${account.status == 2}">
+                            Inactive
+                        </c:if>
+                        <c:if test="${account.status == 3}">
+                            Banned
+                        </c:if>
+                        <c:if test="${account.status == 4}">
+                            Deleted
+                        </c:if>
+                    </td>
                 </tr>
             </c:forEach>
         </table>

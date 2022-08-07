@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 @Controller
 public class AdminAccountController {
@@ -43,13 +43,11 @@ public class AdminAccountController {
                                     + "/n" + userRole
                                     );
         int userStatus = 0;
-        Date processDate;
+//        String userBirthday = null;
         java.sql.Date userBirthday = null;
         try {
             userStatus = Integer.parseInt(userGetStatus);
-//            userBirthday = new SimpleDateFormat("dd/mm/yyyy").parse(userGetBirthday);
-            processDate = new SimpleDateFormat("yyyy-MM-dd").parse(userGetBirthday);
-            userBirthday = new java.sql.Date(processDate.getDate());
+            userBirthday = Date.valueOf(userGetBirthday);
 
 
         } catch (Exception exception) {
@@ -74,6 +72,7 @@ public class AdminAccountController {
                 return "admin/AdminAccountCreate";
             }
         }
-        return "";
+        model.addAttribute("message","Success!");
+        return "admin/AdminAccountCreate";
     }
 }

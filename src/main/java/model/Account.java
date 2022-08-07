@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Date;
+import java.util.Locale;
 
 public class Account {
     private String userMail;
@@ -81,15 +82,28 @@ public class Account {
         this.status = status;
     }
 
+    public boolean validateLogin() {
+        if (this.userMail == null || this.userMail.trim().equals("")) {
+            this.message = "Email was not set";
+            return false;
+        }
+        if (this.password == null || this.password.trim().equals("")) {
+            this.message = "Password was not set";
+            return false;
+        }
+        if (!this.userMail.matches(".+@.+\\.[a-z]+")) {
+            this.message = "This email address is not valid";
+            return false;
+        }
+        if (this.password.length() < 8) {
+            this.message = "Password cannot less then 8 characters long";
+            return false;
+        }
+        return true;
+    }
+
     public boolean validate() {
-       if (this.userMail == null || this.userMail.trim().equals("")) {
-           this.message = "Email was not set";
-           return false;
-       }
-       if (this.password == null || this.password.trim().equals("")) {
-           this.message = "Password was not set";
-           return false;
-       }
+
        if(this.birthday == null) {
            this.message = "Birthday was not set";
            return false;
@@ -127,5 +141,9 @@ public class Account {
                 + this.phone + " "
                 + this.role + " "
                 + this.status + " ";
+    }
+    public boolean checkAdminRole () {
+        return this.role.trim().equalsIgnoreCase("superadmin")
+                || this.role.trim().equalsIgnoreCase("admin");
     }
 }
